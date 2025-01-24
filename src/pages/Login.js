@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Heading from "../components/Heading";
 import TextInput from "../components/TextInput";
+import dotenv from "dotenv";
+dotenv.config();
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -12,7 +14,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    if (username === "helpdesk" && password === "kriya") {
+    if (username == process.env.USERNAME && password === process.env.PASSWORD) {
       toast.success("Login Successful");
       localStorage.setItem("isLoggedIn", true);
       navigate("/dashboard");
@@ -26,7 +28,7 @@ const Login = () => {
       <div className="w-5/6 lg:w-[400px] h-fit bg-white rounded-lg p-8 shadow-lg">
         <div className="flex justify-between items-center">
           <div className="">
-            <h1 className="text-xl mb-1">Kriya '23 Helpdesk</h1>
+            <h1 className="text-xl mb-1">Kriya '25 Helpdesk</h1>
             <Heading>Login</Heading>
           </div>
           <img

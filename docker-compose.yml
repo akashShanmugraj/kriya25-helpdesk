@@ -1,0 +1,8 @@
+services:
+  helpdesk:
+    image: ghcr.io/akashshanmugraj/kriyahelpdesk:latest
+    ports:
+      - "6001:3000"
+    environment:
+      - USERNAME=kriya25helpdeskadmin
+      - PASSWORD=RKLFrKNBhCGA5z # ❌ should change this definetly in production
