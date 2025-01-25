@@ -19,7 +19,7 @@ const App = () => {
             <Route path="login" element={<Login />} />
             <Route path="" element={<PortalWrapper />}>
               {NavRoutes.map((n) => (
-                <Route path={n.href} element={n.element} />
+                <Route key={n.href} path={n.href} element={n.element} />
               ))}
               <Route path="*" element={<p></p>} />
             </Route>

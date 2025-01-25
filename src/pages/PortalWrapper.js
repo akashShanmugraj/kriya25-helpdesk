@@ -49,7 +49,7 @@ const PortalWrapper = () => {
         </div>
         <div className="flex flex-wrap gap-6 mt-12 mb-12 lg:mb-0 justify-center">
           {NavRoutes.map((nav) => (
-            <NavItem title={nav.title} icon={nav.icon} href={nav.href} />
+            <NavItem key={nav.href} title={nav.title} icon={nav.icon} href={nav.href} />
           ))}
         </div>
         <div className={`${location.pathname !== "/register-on-spot" && "hidden"}`}>
