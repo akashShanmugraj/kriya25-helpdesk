@@ -4,8 +4,6 @@ import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Heading from "../components/Heading";
 import TextInput from "../components/TextInput";
-import dotenv from "dotenv";
-dotenv.config();
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -14,7 +12,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    if (username == process.env.USERNAME && password === process.env.PASSWORD) {
+    if (username === "user" && password === "password") {
       toast.success("Login Successful");
       localStorage.setItem("isLoggedIn", true);
       navigate("/dashboard");
