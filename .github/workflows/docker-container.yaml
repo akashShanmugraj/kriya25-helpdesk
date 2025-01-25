@@ -9,5 +9,5 @@ jobs:
       - name: Build and push the image
         run : |
           docker login --username akashShanmugraj --password ${{ secrets.GH_PAT }} ghcr.io
-          docker build . --tag ghcr.io/akashshanmugraj/kriyahelpdesk:latest
-          docker push ghcr.io/akashshanmugraj/kriyahelpdesk:latest
+          docker build . --tag ghcr.io/akashshanmugraj/kriyahelpdesk:depresolve
+          docker push ghcr.io/akashshanmugraj/kriyahelpdesk:depresolve
