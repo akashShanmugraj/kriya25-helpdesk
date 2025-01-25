@@ -1,4 +1,4 @@
-FROM node:14
+FROM node:lts
 
 WORKDIR /app
 
@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 3000
 
-CMD ["npm", "start-carco"]
+CMD ["npm", "start"]

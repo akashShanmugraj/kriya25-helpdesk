@@ -35,7 +35,7 @@
     "web-vitals": "^4.2.4"
   },
   "scripts": {
-    "start": "concurrently \"react-scripts start\" \"npx tailwindcss -i ./src/styles/tailwind.css -o ./src/styles/tailwind.output.css --watch\"",
+    "start": "concurrently \"craco start\" \"npx tailwindcss -i ./src/styles/tailwind.css -o ./src/styles/tailwind.output.css --watch\"",
     "start-craco": "craco start",
     "build": "react-scripts build",
     "test": "react-scripts test",
