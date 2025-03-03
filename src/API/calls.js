@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const BASE_URL = "https://kriyadb.psgtech.ac.in/api";
+export const BASE_URL = "https://kriyabackend.psgtech.ac.in/api";
 
 export const AUTH_URL = `${BASE_URL}/convenor-auth`;
 export const REGISTER_URL = `${BASE_URL}/register`;
