@@ -45,7 +45,7 @@ pipeline {
                         docker stop ${DOCKER_CONTAINER}
                         docker rm ${DOCKER_CONTAINER}
                     fi
-                    docker run -d --name ${DOCKER_CONTAINER} -p 6003:3000 -e USERNAME=kriya25helpdesk -e PASSWORD=12345 -e BACKEND_URL="https://kriyabackend.psgtech.ac.in" ${DOCKER_IMAGE}:${DOCKER_IMAGE_TAG}
+                    docker run -d --name ${DOCKER_CONTAINER} -p 6002:3000 -e USERNAME=kriya25helpdesk -e PASSWORD=12345 -e BACKEND_URL="https://kriyabackend.psgtech.ac.in" ${DOCKER_IMAGE}:${DOCKER_IMAGE_TAG}
 
                     """
                 }
