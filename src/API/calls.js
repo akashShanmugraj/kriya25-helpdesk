@@ -23,8 +23,17 @@ export const fetchApplyAttendanceIndividual = (formData) =>
 export const fetchAttendees = (id) =>
   axios.get(`${REGISTER_URL}/attendees/${id}`);
 
-export const registerOnSpot = (body) =>
-  axios.post(`${BASE_URL}/auth/onspot/register`, body);
+export const registerOnSpot = async (body) => {
+  try {
+    console.log("dataa", body);
+    const resss = await axios.post(`${BASE_URL}/auth/onspot/register`, body);
+    console.log("resdaa", resss);
+    return resss;  // ✅ Return successful response
+  } catch (error) {
+    console.error("Error in registerOnSpot:", error);
+    throw error; // ✅ Ensure the error is thrown so toast.promise catches it
+  }
+};
 
 export const generateOnSpotPaymentURL = (body) =>
   axios.post(`${BASE_URL}/payment/onspot/pay-general`, body);

@@ -72,7 +72,7 @@ const OnSpotRegistration = () => {
   const getIsPSG = (college) => {
     return college === PSG_COLLEGE
   }
-
+  const [errorMessage, setErrorMessage] = useState("");
   const register = async () => {
     if (formData.college === "Other") {
       formData.college = otherCollege;
@@ -82,45 +82,87 @@ const OnSpotRegistration = () => {
       formData.department = otherDept;
     }
 
-    return toast.promise(registerOnSpot({
-      ...formData,
-      isPSGStudent: getIsPSG(formData.college)
-    }), {
-      loading: "Registering...",
-      success: (res) => {
-        const user = res.data.user;
-        clearFormData();
-        setPaymentFormData({ ...paymentFormData, email: user.email, name: user.name, kriyaId: user.kriyaId, fee: getFee(user.college) });
-        return `Successfully registered user ${res.data.user.name}`
-      },
-      error: (err) => {
-        if (err.response.status === 409) {
-          const user = err.response.data.user;
-          if (user.isPaid) {
-            return "User as already registered and paid";
-          }
-          setPaymentFormData({ ...paymentFormData, email: user.email, name: user.name, kriyaId: user.kriyaId, fee: getFee(user.college) });
-          return "User as already registered continue to generate payment URL";
+    console.log("formdataa---...", formData);
+
+    try {
+      return await toast.promise(
+        registerOnSpot({
+          ...formData,
+          isPSGStudent: getIsPSG(formData.college),
+        }),
+        {
+          loading: "Registering...",
+          success: (res) => {
+            console.log("print", res);
+            const user = res.data.user;
+            clearFormData();
+            setErrorMessage(""); // ✅ Clear error on success
+            setPaymentFormData({
+              ...paymentFormData,
+              email: user.email,
+              name: user.name,
+              kriyaId: user.kriyaId,
+              fee: getFee(user.college),
+            });
+            return `Successfully registered user ${user.name}`;
+          },
+          error: (err) => {
+            console.log("Handling error:", err);
+
+            let errorText = "An unknown error occurred";
+            if (err.response?.status === 409) {
+              const user = err.response.data.user;
+              if (user.isPaid) {
+                errorText = "User has already registered and paid";
+              } else {
+                errorText = "User has already registered, continue to generate payment URL";
+                setPaymentFormData({
+                  ...paymentFormData,
+                  email: user.email,
+                  name: user.name,
+                  kriyaId: user.kriyaId,
+                  fee: getFee(user.college),
+                });
+              }
+            } else if (err.response?.data?.error) {
+              errorText = err.response.data.error;
+            }
+
+            setErrorMessage(errorText); // ✅ Set error message in UI
+            return errorText;
+          },
         }
-        return err.response.data.error;
-      }
-    })
+      );
+    } catch (error) {
+      console.error("Caught error in register function:", error);
+      setErrorMessage("An unexpected error occurred. Please try again.");
+    }
   };
 
+
   const generatePaymentURL = async () => {
-    return toast.promise(generateOnSpotPaymentURL(paymentFormData), {
-      loading: "Generating...",
-      success: (res) => {
-        setUrl(res.data.url);
-        console.log(res.data.url);
-        return "Please Scan the QR Code to Pay";
-      },
-      error: (err) => {
-        console.log(err);
-        return err.response.data.error;
-      }
-    });
-  }
+    try {
+      return await toast.promise(
+        generateOnSpotPaymentURL(paymentFormData),
+        {
+          loading: "Generating...",
+          success: (res) => {
+            setUrl(res.data.url);
+            console.log(res.data.url);
+            window.location.href = res.data.url; // ✅ Corrected line
+            return "Please Scan the QR Code to Pay";
+          },
+          error: (err) => {
+            console.error("Payment URL generation failed:", err);
+            return err.response?.data?.error || "An error occurred while generating the payment URL.";
+          }
+        }
+      );
+    } catch (error) {
+      console.error("Caught error in generatePaymentURL function:", error);
+      toast.error("An unexpected error occurred. Please try again.");
+    }
+  };
 
   const selectStyles = {
     control: (baseStyles, state) => ({
@@ -268,6 +310,13 @@ const OnSpotRegistration = () => {
             ]}
           />
         </Row>
+
+        {errorMessage && (
+          <div className="bg-red-500 text-white p-3 rounded-md mt-3">
+            {errorMessage}
+          </div>
+        )}
+
         <Row className="pt-8">
           <Button text="Register" handleClick={(e) => {
             register();
@@ -319,6 +368,7 @@ const OnSpotRegistration = () => {
             setDetails({ ...details, name: paymentFormData.name, kriyaId: paymentFormData.kriyaId });
             generatePaymentURL();
           }} />
+
           <Button text="Clear" outlined handleClick={(e) => {
             clearPaymentFormData();
           }} />
