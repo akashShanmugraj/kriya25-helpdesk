@@ -24,20 +24,20 @@ const ListKit = () => {
     });
   }, []);
 
-  useEffect(() => {
-    toast.promise(fetchCountWise(), {
-      loading: "Loading...",
-      success: (data) => {
-        console.log(data.data.users);
-        setCount(data.data);
-        return "Success";
-      },
-      error: (err) => {
-        console.log(err);
-        return "Error";
-      }
-    })
-  }, [])
+  // useEffect(() => {
+  //   toast.promise(fetchCountWise(), {
+  //     loading: "Loading...",
+  //     success: (data) => {
+  //       console.log(data.data.users);
+  //       setCount(data.data);
+  //       return "Success";
+  //     },
+  //     error: (err) => {
+  //       console.log(err);
+  //       return "Error";
+  //     }
+  //   })
+  // }, [])
 
   return (
     <div className="h-full w-full overflow-hidden font-poppins p-8">
