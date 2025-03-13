@@ -3,6 +3,7 @@ import { TfiWrite } from "react-icons/tfi";
 import ListKit from "./pages/ListKit";
 import OnSpotRegistration from "./pages/OnSpotRegistration";
 import ProvideKit from "./pages/ProvideKit";
+import CheckId from "./pages/CheckId";
 
 const NavRoutes = [
   {
@@ -10,6 +11,12 @@ const NavRoutes = [
     icon: <FiUserPlus />,
     href: "/register-on-spot",
     element: <OnSpotRegistration />,
+  },
+  {
+    title: "Check Id Card",
+    icon: <TfiWrite />,
+    href: "/check-id-card",
+    element: <CheckId />,
   },
   {
     title: "Provide Kit",

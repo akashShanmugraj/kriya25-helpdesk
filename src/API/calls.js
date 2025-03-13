@@ -4,7 +4,35 @@ export const BASE_URL = "https://kriyabackend.psgtech.ac.in/api";
 
 export const AUTH_URL = `${BASE_URL}/convenor-auth`;
 export const REGISTER_URL = `${BASE_URL}/register`;
+const USER_URL = `${BASE_URL}/auth`;
 
+export const pdfUrlUpdate = async (email, url) => {
+  await axios.put(
+    `${USER_URL}/user-details/${email}`,
+    { verificationUrl: url },
+    {}
+  );
+};
+
+export const uploadPdf = async (file, kriyaId) => {
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const res = await axios.post(`${BASE_URL}/upload`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        filetype: "VERF",
+        kriyaId: kriyaId,
+      },
+    });
+
+    return res; // Assuming the server sends back the URL of the uploaded PDF
+  } catch (err) {
+    console.error("Error uploading PDF:", err);
+    throw err;
+  }
+};
 export const fetchRegister = (formData) =>
   axios.post(`${AUTH_URL}/register`, formData, {});
 
@@ -28,7 +56,7 @@ export const registerOnSpot = async (body) => {
     console.log("dataa", body);
     const resss = await axios.post(`${BASE_URL}/auth/onspot/register`, body);
     console.log("resdaa", resss);
-    return resss;  // ✅ Return successful response
+    return resss; // ✅ Return successful response
   } catch (error) {
     console.error("Error in registerOnSpot:", error);
     throw error; // ✅ Ensure the error is thrown so toast.promise catches it
@@ -46,4 +74,5 @@ export const fetchUserDetails = (kriyaId) =>
 
 export const fetchKit = () => axios.get(`${BASE_URL}/auth/kit-done`);
 
-export const fetchCountWise = () => axios.get(`${BASE_URL}/auth/workshop-and-general`)
+export const fetchCountWise = () =>
+  axios.get(`${BASE_URL}/auth/workshop-and-general`);
