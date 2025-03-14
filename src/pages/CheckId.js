@@ -43,18 +43,18 @@ const CheckAndProvideKit = () => {
     payment?.length === 0
       ? toast.error("No Payment Done!")
       : toast.promise(fetchUpdateUser(`KRIYA${kriyaId}`, { kit: true }), {
-          loading: "Loading...",
-          success: () => {
-            setKriyaId("");
-            setUserData(null);
-            setPayment([]);
-            return "Success";
-          },
-          error: (err) => {
-            console.log(err);
-            return "Error";
-          },
-        });
+        loading: "Loading...",
+        success: () => {
+          setKriyaId("");
+          setUserData(null);
+          setPayment([]);
+          return "Success";
+        },
+        error: (err) => {
+          console.log(err);
+          return "Error";
+        },
+      });
   };
 
   return (

@@ -4,6 +4,7 @@ import ListKit from "./pages/ListKit";
 import OnSpotRegistration from "./pages/OnSpotRegistration";
 import ProvideKit from "./pages/ProvideKit";
 import CheckId from "./pages/CheckId";
+import ProvideCertificate from "./pages/ProvideCertificate";
 
 const NavRoutes = [
   {
@@ -30,6 +31,12 @@ const NavRoutes = [
     href: "/kit-list",
     element: <ListKit />,
   },
+  {
+    title: "Proivde Certificate",
+    icon: <TfiWrite />,
+    href: "/provide-certificate",
+    element: <ProvideCertificate />,
+  }
 ];
 
 export default NavRoutes;
