@@ -6,7 +6,7 @@ import Button from "../components/Button";
 import { fetchParticipantDetails, fetchUpdateUser } from "../API/calls";
 import PdfUploader from "../components/PdfUploader";
 
-const CheckId = () => {
+const CheckAndProvideKit = () => {
   const [kriyaId, setKriyaId] = useState("");
   const [userData, setUserData] = useState(null);
   const [payment, setPayment] = useState([]);
@@ -19,11 +19,7 @@ const CheckId = () => {
         toast.promise(fetchParticipantDetails(`KRIYA${val}`), {
           loading: "Loading...",
           success: (data) => {
-            console.log(
-              "user---",
-              data.data.user,
-              data.data.user.verificationUrl
-            );
+            console.log(data);
             setUserData(data.data.user);
             setPayment(data.data.payment);
             if (data.data.user.verificationUrl) {
@@ -62,7 +58,10 @@ const CheckId = () => {
   };
 
   return (
-    <Layout className={"space-y-4 px-4 lg:px-0"} title={"Check ID Card"}>
+    <Layout
+      className={"space-y-4 px-4 lg:px-0"}
+      title={"Check and Provide Kit"}
+    >
       <div className="flex flex-col space-y-8 h-fit ">
         <div className="w-full lg:w-fit h-fit">
           <p className="text-lg">Enter Kriya ID</p>
@@ -70,7 +69,7 @@ const CheckId = () => {
         </div>
         {userData ? (
           <div className="space-y-4">
-            {/* {payment?.length !== 0 ? (
+            {payment?.length !== 0 ? (
               <div className="text-emerald-600 font-semibold text-3xl">
                 Paid!
               </div>
@@ -78,8 +77,8 @@ const CheckId = () => {
               <div className="text-red-600 font-semibold text-3xl">
                 Not Paid!
               </div>
-            )} */}
-            {/* {payment?.includes("GENERAL") && payment?.includes("WORKSHOP") ? (
+            )}
+            {payment?.includes("GENERAL") && payment?.includes("WORKSHOP") ? (
               <div className="font-semibold text-3xl">
                 Kit : General + Workshop
               </div>
@@ -94,7 +93,7 @@ const CheckId = () => {
               <div className="text-red-600 font-semibold text-3xl">
                 Kit Already Provided!
               </div>
-            )} */}
+            )}
             {console.log("iddd--", userData.verificationUrl)}
             {idExists && userData.verificationUrl ? (
               <div>
@@ -109,15 +108,15 @@ const CheckId = () => {
                 ></iframe>
               </div>
             ) : (
-                <>
-              <div className="text-red-600 font-semibold text-3xl">
-                IdCard Not Uploaded!
-              </div>
-              <PdfUploader
-              kriyaId={userData?.kriyaId}
-              email={userData?.email}
-            />
-            </>
+              <>
+                <div className="text-red-600 font-semibold text-3xl">
+                  IdCard Not Uploaded!
+                </div>
+                <PdfUploader
+                  kriyaId={userData?.kriyaId}
+                  email={userData?.email}
+                />
+              </>
             )}
             <div className="flex items-center pt-8">
               <p className="font-semibold w-[10ch]">Name</p>
@@ -137,10 +136,7 @@ const CheckId = () => {
                 {userData.college}
               </p>
             </div>
-
-            
-
-            {/* <div className="pt-8 flex items-center space-x-4 w-full lg:w-3/4">
+            <div className="pt-8 flex items-center space-x-4 w-full lg:w-3/4">
               <Button text={"Done"} handleClick={handleApply} />
               <Button
                 handleClick={(e) => {
@@ -151,7 +147,7 @@ const CheckId = () => {
                 outlined
                 text="Clear"
               />
-            </div> */}
+            </div>
           </div>
         ) : (
           <div className="w-full bg-gray-200 h-full p-8 flex justify-center items-center mt-4">
@@ -165,4 +161,4 @@ const CheckId = () => {
   );
 };
 
-export default CheckId;
+export default CheckAndProvideKit;
